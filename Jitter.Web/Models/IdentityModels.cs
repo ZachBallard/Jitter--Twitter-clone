@@ -22,23 +22,25 @@ namespace Jitter.Web.Models
         }
 
         public string Handle { get; set; }
-        public string PhotoURL { get; set; }
+        public string PhotoURL { get; set; } = "http://www.herosforheros.com/images/user_profile/noUserPhoto.jpg";
 
         [ForeignKey("FollowerId")]
-        public ICollection<JitterFollowers> Followers { get; set; }
+        public virtual ICollection<JitterFollowers> Followers { get; set; } = new List<JitterFollowers>();
         [ForeignKey("FollowingId")]
-        public ICollection<JitterFollowers> Following { get; set; } 
+        public virtual ICollection<JitterFollowers> Following { get; set; } = new List<JitterFollowers>();
 
-        public ICollection<Tweak> Tweaks { get; set; } 
+        public virtual ICollection<Tweak> Tweaks { get; set; } = new List<Tweak>();
 
     }
 
     public class Tweak
     {
         public int Id { get; set; }
-        public DateTime TweakDate { get; set; }
+        public DateTime TweakDate { get; set; } = DateTime.Now;
         [MaxLength(250)]
         public string Body { get; set; }
+
+        public virtual JitterUser JitterUser { get; set; }
     }
 
     public class JitterFollowers
@@ -46,11 +48,11 @@ namespace Jitter.Web.Models
         public int Id { get; set;}
 
         [ForeignKey("FollowerId")]
-        public JitterUser Follower { get; set; }
+        public virtual JitterUser Follower { get; set; }
         public string FollowerId { get; set; }
 
         [ForeignKey("FollowingId")]
-        public JitterUser Following{ get; set; }
+        public virtual JitterUser Following{ get; set; }
         public string FollowingId { get; set; }
 
         public bool IsBlocked { get; set; }
@@ -67,5 +69,8 @@ namespace Jitter.Web.Models
         {
             return new DbContext();
         }
+
+
+        public System.Data.Entity.DbSet<Jitter.Web.Models.Tweak> Tweaks { get; set; }
     }
 }

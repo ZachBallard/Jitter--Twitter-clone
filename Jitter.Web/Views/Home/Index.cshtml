@@ -1,31 +1,61 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Jitter.Web.Models
+@model Jitter.Web.Models.JitterUser
+@{
+    var allTweaks = new List<Tweak>();
+    allTweaks = Model.Tweaks.ToList();
+    allTweaks.AddRange(Model.Following.Where(item => item.FollowerId == Model.Id).SelectMany(item => item.Following.Tweaks));
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="col-xs-2 leftcolumn">
+    <div>
+        <img class="img-responsive" src="@Model.PhotoURL" />
+    </div>
+    Tweaks: @Model.Tweaks.Count <br />
+    Followers: @Model.Followers.Count <br />
+    Following: @Model.Following.Count<br />
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="col-xs-5 centercolumn">
+    <div class="tweakdiv">
+        <form action="@Url.Action("Create")" method="post">
+            <input type="text" name="Body" />
+            <input type="submit" value="New Tweak" />
+        </form>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    @if (allTweaks.Count == 0)
+    {
+        <br/>
+        <text>You should write a Tweak. Its sort of the point.</text>
+    }
+    else
+    {
+        foreach (var item in allTweaks.OrderByDescending(x => x.TweakDate))
+        {
+            <div class="tweakdiv">
+                <div>
+                    <a href="Home/About/@item.JitterUser.Handle">@@@item.JitterUser.Handle</a>
+                </div>
+                <div>@item.TweakDate</div>
+                <div>@item.Body</div>
+
+                <div>
+                    <form action="@Url.Action("Delete", new {id = item.Id})" method="post">
+                        <input type="submit" value="Delete" />
+                    </form>
+                </div>
+            </div>
+        }
+    }
+</div>
+<div class="col-xs-3 rightcolumn">
+    @if (Model.Following.Count == 0)
+    {
+        <text> This is blank. (You should try following someone sometime)</text>
+    }
+    else
+    {
+        foreach (var item in Model.Following)
+        {
+            <a href="Home/About/@item.FollowingId">@item.Follower.Handle</a>
+        }
+    }
 </div>
