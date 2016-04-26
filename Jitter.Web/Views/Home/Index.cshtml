@@ -5,6 +5,9 @@
     allTweaks = Model.Tweaks.ToList();
     allTweaks.AddRange(Model.Following.Where(item => item.FollowerId == Model.Id).SelectMany(item => item.Following.Tweaks));
 }
+<div class="col-xs-12 navbar">
+    @Html.Partial("_LoginPartial")
+</div>
 <div class="col-xs-2 leftcolumn">
     <div>
         <img class="img-responsive" src="@Model.PhotoURL" />
@@ -32,7 +35,7 @@
         {
             <div class="tweakdiv">
                 <div>
-                    <a href="Home/About/@item.JitterUser.Handle">@@@item.JitterUser.Handle</a>
+                    <a href="Home/u0/@item.JitterUser.Handle">@@@item.JitterUser.Handle</a>
                 </div>
                 <div>@item.TweakDate</div>
                 <div>@item.Body</div>

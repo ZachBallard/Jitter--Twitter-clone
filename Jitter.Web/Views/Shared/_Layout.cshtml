@@ -6,14 +6,14 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
-    <div class="header">
-        <a href="http://localhost:64278/"><img src="http://www.clker.com/cliparts/D/Y/e/Q/0/4/red-house-hi.png" height="50" width="50" /></a>
-        <a href="http://localhost:64278/"><img src="http://www.clker.com/cliparts/P/O/d/5/W/N/red-lightening-bolt-hi.png" height="50" width="50" /></a>
-        <a href="http://localhost:64278/"><img src="http://images.junkmail.co.za/images/original/2015/12/21/014a99652ec95fd8252c41e5c22207951450687082.jpeg" height="50" width="50" /></a>
-        <a href="http://localhost:64278/"><img src="http://www.iconsplace.com/icons/preview/red/message-outline-256.png" height="50" width="50" /></a>
-        <img src="http://www.oocities.org/zoidberg_fan/episodes/images/fry_coffee.gif" height="100" width="100" />
+    <div class="header col-xs-12">
+        <a href="http://localhost:64278/"><img src="http://www.clker.com/cliparts/D/Y/e/Q/0/4/red-house-hi.png" class="icon" height="50" width="50" /></a>
+        <a href="http://localhost:64278/"><img src="http://www.clker.com/cliparts/P/O/d/5/W/N/red-lightening-bolt-hi.png" class="icon"  height="50" width="50" /></a>
+        <a href="http://localhost:64278/"><img src="http://images.junkmail.co.za/images/original/2015/12/21/014a99652ec95fd8252c41e5c22207951450687082.jpeg"  class="icon" height="50" width="50" /></a>
+        <a href="http://localhost:64278/"><img src="http://www.iconsplace.com/icons/preview/red/message-outline-256.png" class="icon"  height="50" width="50" /></a>
+        <img class="jitterlogo"src="http://www.oocities.org/zoidberg_fan/episodes/images/fry_coffee.gif" height="100" width="100" />
         <text class="headertext">Jitter</text>
-        @Html.Partial("_LoginPartial")
+
     </div>
     @RenderBody()
 

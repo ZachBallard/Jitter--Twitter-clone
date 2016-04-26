@@ -5,17 +5,21 @@
 
     allTweaks = Model.Tweaks.ToList();
     allTweaks.AddRange(Model.Following.Where(item => item.FollowerId == Model.Id).SelectMany(item => item.Following.Tweaks));
+
 }
+<div class="col-xs-12 navbar">
+    @Html.Partial("_LoginPartial")
+</div>
 <div class="col-xs-2 leftcolumn">
     <div>
-        <img class="img-responsive" src="@Model.PhotoURL" />
+        <img class="img-responsive" src="@Model.PhotoURL"/>
     </div>
-    Tweaks: @Model.Tweaks.Count <br />
-    Followers: @Model.Followers.Count <br />
-    Following: @Model.Following.Count<br />
-    <form action="@Url.Action("")" method="post">
-        <input type="submit" value="New Tweak" />
-    </form>
+    <div>
+        Tweaks: @Model.Tweaks.Count <br />
+        Followers: @Model.Followers.Count <br />
+        Following: @Model.Following.Count<br />
+    </div>
+
 </div>
 
 <div class="col-xs-5 centercolumn">
@@ -36,7 +40,7 @@
         {
             <div class="tweakdiv">
                 <div>
-                    <a href="Home/About/@item.JitterUser.Handle">@@@item.JitterUser.Handle</a>
+                    <a href="/u/@item.JitterUser.Handle">@@@item.JitterUser.Handle</a>
                 </div>
                 <div>@item.TweakDate</div>
                 <div>@item.Body</div>
@@ -51,8 +55,15 @@
     }
 </div>
 <div class="col-xs-3 rightcolumn">
+    <Text>@@@Model.Handle:</Text>
+    <form action="@Url.Action("ManageFollowing")" method="post">
+        <input type="submit" value="Follow/Unfollow"/>
+    </form>
+    <br/>
+    <text>Following: </text>
+    <br/>
     @if (Model.Following.Count == 0)
-            {
+    {
         <text> This is blank. (You should try following someone sometime)</text>
     }
     else
@@ -62,4 +73,5 @@
             <a href="Home/About/@item.FollowingId">@item.Follower.Handle</a>
         }
     }
+
 </div>

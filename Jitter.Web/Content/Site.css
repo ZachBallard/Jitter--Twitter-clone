@@ -22,22 +22,47 @@ div {
     color: red;
     font-family: fantasy;
     font-size: 50px;
+    margin-left: 15px;
+    border-bottom: solid red 5px;
 }
+
 .leftcolumn {
     float: left;
     padding: 5px;
-    margin: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
     border: solid grey 1px;
 }
 .centercolumn {
     float: left;
     padding: 5px;
-    margin-top: 10px;
     background-color: darkgrey;
 }
 .rightcolumn {
     float: left;
     padding: 5px;
-    margin: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
     border: solid grey 1px;
+}
+.navbar {
+    background-color: red;
+    border-radius: 25px;
+    border-color: grey;
+    margin: 5px;
+}
+.innernavbar {
+    background-color: white;
+    border: solid darkred 2px;
+    margin: 15px;
+    text-align: center;
+}
+.icon:hover {
+    
+    height: 75px;
+    width: 75px;
+
+}
+.jitterlogo {
+    margin-left: 50px;
 }
