@@ -35,7 +35,7 @@
         {
             <div class="tweakdiv">
                 <div>
-                    <a href="Home/u0/@item.JitterUser.Handle">@@@item.JitterUser.Handle</a>
+                    @Html.ActionLink("@"+ item.JitterUser.Handle, "About", new { userHandle = item.JitterUser.Handle })
                 </div>
                 <div>@item.TweakDate</div>
                 <div>@item.Body</div>
