@@ -53,18 +53,19 @@
 </div>
 <div class="col-xs-3 rightcolumn">
     <form action="@Url.Action("ManageFollowing")" method="post">
+        @Html.Hidden("newfollowerid", Model.UserId)
         <input type="submit" value="(Un)Follow"/>
     </form>
     <br/>
     <text>Following: </text>
     <br/>
-    @if (Model.FollowingCount == 0)
+    @if (Model.FollowerCount == 0)
     {
         <text> This is blank. (You should try following someone sometime)</text>
     }
     else
     {
-        foreach (var item in Model.Following)
+        foreach (var item in Model.Followers)
         {
             @Html.ActionLink(item.Value, "About", "Home", new {  id = item.Key})
         }

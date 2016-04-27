@@ -72,5 +72,6 @@ namespace Jitter.Web.Models
 
 
         public System.Data.Entity.DbSet<Jitter.Web.Models.Tweak> Tweaks { get; set; }
+        public System.Data.Entity.DbSet<Jitter.Web.Models.JitterFollowers> Followers { get; set; }
     }
 }

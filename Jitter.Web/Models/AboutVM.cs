@@ -17,7 +17,7 @@ namespace Jitter.Web.Models
         public IDictionary<string, string> Following { get; set; } = new Dictionary<string, string>();
         public IDictionary<string, string> Followers { get; set; } = new Dictionary<string, string>();
         public bool CanDelete { get; set; }
-
+        public string UserId { get; set; }
     }
 
     public class TweakVM

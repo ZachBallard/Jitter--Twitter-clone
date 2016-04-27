@@ -50,15 +50,15 @@
     }
 </div>
 <div class="col-xs-3 rightcolumn">
-    @if (Model.Following.Count == 0)
+    @if (Model.Followers.Count == 0)
     {
         <text> This is blank. (You should try following someone sometime)</text>
     }
     else
     {
-        foreach (var item in Model.Following)
+        foreach (var item in Model.Followers)
         {
-            <a href="Home/About/@item.FollowingId">@item.Follower.Handle</a>
+            <a href="Home/About/@item.FollowingId">@item.Following.Handle</a>
         }
     }
 </div>

@@ -30,9 +30,10 @@ namespace Jitter.Web.Controllers
         public ActionResult About(string userHandle)
         {
             var userInfo = db.Users.FirstOrDefault(x => x.Handle == userHandle);
-            var userid = User.Identity.GetUserId();
-            var model = new AboutVM
+            var userid = User.Identity.GetUserId(); //who's logged in
+            var model = new AboutVM()
             {
+                UserId = userInfo.Id,
                 Tweaks = userInfo.Tweaks.Select(
                     t =>
                         new TweakVM()
@@ -43,10 +44,10 @@ namespace Jitter.Web.Controllers
                             UserHandle = t.JitterUser.Handle
                         }).ToList(),
                 Following =
-                    userInfo.Followers.Select(x => new { Key = x.FollowingId, Value = x.Following.Handle }).ToDictionary(t => t.Key, t => t.Value),
+                    userInfo.Following.Select(x => new { Key = x.FollowerId, Value = x.Follower.Handle }).ToDictionary(t => t.Key, t => t.Value),
                 FollowerCount = userInfo.Followers.Count,
                 Followers =
-                    userInfo.Following.Select(x => new { Key = x.FollowerId, Value = x.Follower.Handle }).ToDictionary(t => t.Key, t => t.Value),
+                    userInfo.Followers.Select(x => new { Key = x.FollowingId, Value = x.Following.Handle }).ToDictionary(t => t.Key, t => t.Value),
                 FollowingCount = userInfo.Following.Count,
                 TweaksCount = userInfo.Tweaks.Count,
                 PhotoURL = userInfo.PhotoURL,
@@ -76,19 +77,23 @@ namespace Jitter.Web.Controllers
         }
         // POST: Home/ManageFollowing/5
         [HttpPost, ActionName("ManageFollowing")]
-        public ActionResult ManageFollowing(string id)
+        public ActionResult ManageFollowing(string newfollowerid)
         {
             var userid = User.Identity.GetUserId();
 
-            var userInfo = db.Users.Find(userid);
+            var us = db.Users.Find(userid);
+            var them = db.Users.Find(newfollowerid);
 
-            if (userInfo.Following.Any(x => x.FollowerId == userid && x.FollowingId == id))
+            var existingRelationship = db.Followers.FirstOrDefault(x => x.FollowerId == us.Id && x.FollowingId == them.Id);
+
+            if (existingRelationship != null)
             {
-                userInfo.Following.Remove(new JitterFollowers() { FollowerId = userid, FollowingId = id });
+                db.Followers.Remove(existingRelationship);
             }
             else
             {
-                userInfo.Following.Add(new JitterFollowers() { FollowerId = userid, FollowingId = id });
+                var newRelationship = new JitterFollowers() {Follower= us, Following = them};
+                db.Followers.Add(newRelationship);
             }
 
             db.SaveChanges();
